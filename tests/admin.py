@@ -1,12 +1,9 @@
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals
+from __future__ import absolute_import, division, print_function, unicode_literals
 
-from pysolr import SolrCoreAdmin, json
+import unittest
 
-try:
-    import unittest2 as unittest
-except ImportError:
-    import unittest
+from pysolr import SolrCoreAdmin
 
 
 class SolrCoreAdminTestCase(unittest.TestCase):
@@ -18,24 +15,21 @@ class SolrCoreAdminTestCase(unittest.TestCase):
         self.assertTrue('name="defaultCoreName"' in self.solr_admin.status())
         self.assertTrue('<int name="status">' in self.solr_admin.status(core='core0'))
 
-    def test_create(self):
-        self.assertTrue('<int name="status">0</int>' in self.solr_admin.create('wheatley'))
-
     def test_reload(self):
-        self.assertTrue('<int name="status">0</int>' in self.solr_admin.reload('wheatley'))
+        self.assertTrue('<int name="status">0</int>' in self.solr_admin.reload('core0'))
 
     def test_rename(self):
-        self.solr_admin.create('wheatley')
-        self.assertTrue('<int name="status">0</int>' in self.solr_admin.rename('wheatley', 'rick'))
+        self.assertTrue('<int name="status">0</int>' in self.solr_admin.rename('core0', 'coreX'))
+        self.assertTrue('<int name="status">0</int>' in self.solr_admin.rename('coreX', 'core0'))
 
     def test_swap(self):
-        self.solr_admin.create('wheatley')
-        self.solr_admin.create('rick')
-        self.assertTrue('<int name="status">0</int>' in self.solr_admin.swap('wheatley', 'rick'))
+        self.assertTrue('<int name="status">0</int>' in self.solr_admin.swap('core0', 'core1'))
+        self.assertTrue('<int name="status">0</int>' in self.solr_admin.swap('core1', 'core0'))
 
-    def test_unload(self):
-        self.solr_admin.create('wheatley')
-        self.assertTrue('<int name="status">0</int>' in self.solr_admin.unload('wheatley'))
+    def test_unload_create(self):
+        # unload core0 without deleting data and then recreate it
+        self.assertTrue('<int name="status">0</int>' in self.solr_admin.unload('core0'))
+        self.assertTrue('<int name="status">0</int>' in self.solr_admin.create('core0'))
 
     def test_load(self):
         self.assertRaises(NotImplementedError, self.solr_admin.load, 'wheatley')

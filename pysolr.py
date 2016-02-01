@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 import ast
 import datetime
 import logging
@@ -51,14 +53,15 @@ except NameError:
 
 __author__ = 'Daniel Lindsley, Joseph Kocherhans, Jacob Kaplan-Moss'
 __all__ = ['Solr']
-__version__ = (3, 3, 0)
+__version__ = (1, 0, 0)
 
 
 def get_version():
     return "%s.%s.%s" % __version__[:3]
 
 
-DATETIME_REGEX = re.compile('^(?P<year>\d{4})-(?P<month>\d{2})-(?P<day>\d{2})T(?P<hour>\d{2}):(?P<minute>\d{2}):(?P<second>\d{2})(\.\d+)?Z$')
+DATETIME_REGEX = re.compile('^(?P<year>\d{4})-(?P<month>\d{2})-(?P<day>\d{2})'
+                            'T(?P<hour>\d{2}):(?P<minute>\d{2}):(?P<second>\d{2})(\.\d+)?Z$')
 # dict key used to add nested documents to a document
 NESTED_DOC_KEY = '_childDocuments_'
 
@@ -152,7 +155,7 @@ def unescape_html(text):
                 text = unicode_char(htmlentities.name2codepoint[text[1:-1]])
             except KeyError:
                 pass
-        return text # leave as is
+        return text  # leave as is
     return re.sub("&#?\w+;", fixup, text)
 
 
@@ -307,7 +310,8 @@ class Solr(object):
             self.log.error(error_message, url, err, exc_info=True)
             raise SolrError(error_message % (url, err))
         except requests.exceptions.ConnectionError as err:
-            error_message = "Failed to connect to server at '%s', are you sure that URL is correct? Checking it in a browser might help: %s"
+            error_message = ("Failed to connect to server at '%s', are you sure that URL is correct? "
+                             "Checking it in a browser might help: %s")
             params = (url, err)
             self.log.error(error_message, *params, exc_info=True)
             raise SolrError(error_message % params)
@@ -357,7 +361,8 @@ class Solr(object):
         path = 'terms/?%s' % safe_urlencode(params, True)
         return self._send_request('get', path)
 
-    def _update(self, message, clean_ctrl_chars=True, commit=True, softCommit=False, waitFlush=None, waitSearcher=None):
+    def _update(self, message, clean_ctrl_chars=True, commit=True, softCommit=False, waitFlush=None,
+                waitSearcher=None):
         """
         Posts the given xml message to http://<self.url>/update and
         returns the result.
@@ -567,7 +572,8 @@ class Solr(object):
                 for dk, dv in date_values.items():
                     date_values[dk] = int(dv)
 
-                return datetime.datetime(date_values['year'], date_values['month'], date_values['day'], date_values['hour'], date_values['minute'], date_values['second'])
+                return datetime.datetime(date_values['year'], date_values['month'], date_values['day'],
+                                         date_values['hour'], date_values['minute'], date_values['second'])
 
         try:
             # This is slightly gross but it's hard to tell otherwise what the
@@ -766,7 +772,8 @@ class Solr(object):
 
         return doc_elem
 
-    def add(self, docs, boost=None, fieldUpdates=None, commit=True, softCommit=False, commitWithin=None, waitFlush=None, waitSearcher=None):
+    def add(self, docs, boost=None, fieldUpdates=None, commit=True, softCommit=False, commitWithin=None,
+            waitFlush=None, waitSearcher=None):
         """
         Adds or updates documents.
 
@@ -818,7 +825,8 @@ class Solr(object):
 
         end_time = time.time()
         self.log.debug("Built add request of %s docs in %0.2f seconds.", len(message), end_time - start_time)
-        return self._update(m, commit=commit, softCommit=softCommit, waitFlush=waitFlush, waitSearcher=waitSearcher)
+        return self._update(m, commit=commit, softCommit=softCommit, waitFlush=waitFlush,
+                            waitSearcher=waitSearcher)
 
     def delete(self, id=None, q=None, commit=True, waitFlush=None, waitSearcher=None):
         """
@@ -1068,36 +1076,37 @@ class SolrCoreAdmin(object):
 # Using two-tuples to preserve order.
 REPLACEMENTS = (
     # Nuke nasty control characters.
-    (b'\x00', b''), # Start of heading
-    (b'\x01', b''), # Start of heading
-    (b'\x02', b''), # Start of text
-    (b'\x03', b''), # End of text
-    (b'\x04', b''), # End of transmission
-    (b'\x05', b''), # Enquiry
-    (b'\x06', b''), # Acknowledge
-    (b'\x07', b''), # Ring terminal bell
-    (b'\x08', b''), # Backspace
-    (b'\x0b', b''), # Vertical tab
-    (b'\x0c', b''), # Form feed
-    (b'\x0e', b''), # Shift out
-    (b'\x0f', b''), # Shift in
-    (b'\x10', b''), # Data link escape
-    (b'\x11', b''), # Device control 1
-    (b'\x12', b''), # Device control 2
-    (b'\x13', b''), # Device control 3
-    (b'\x14', b''), # Device control 4
-    (b'\x15', b''), # Negative acknowledge
-    (b'\x16', b''), # Synchronous idle
-    (b'\x17', b''), # End of transmission block
-    (b'\x18', b''), # Cancel
-    (b'\x19', b''), # End of medium
-    (b'\x1a', b''), # Substitute character
-    (b'\x1b', b''), # Escape
-    (b'\x1c', b''), # File separator
-    (b'\x1d', b''), # Group separator
-    (b'\x1e', b''), # Record separator
-    (b'\x1f', b''), # Unit separator
+    (b'\x00', b''),  # Start of heading
+    (b'\x01', b''),  # Start of heading
+    (b'\x02', b''),  # Start of text
+    (b'\x03', b''),  # End of text
+    (b'\x04', b''),  # End of transmission
+    (b'\x05', b''),  # Enquiry
+    (b'\x06', b''),  # Acknowledge
+    (b'\x07', b''),  # Ring terminal bell
+    (b'\x08', b''),  # Backspace
+    (b'\x0b', b''),  # Vertical tab
+    (b'\x0c', b''),  # Form feed
+    (b'\x0e', b''),  # Shift out
+    (b'\x0f', b''),  # Shift in
+    (b'\x10', b''),  # Data link escape
+    (b'\x11', b''),  # Device control 1
+    (b'\x12', b''),  # Device control 2
+    (b'\x13', b''),  # Device control 3
+    (b'\x14', b''),  # Device control 4
+    (b'\x15', b''),  # Negative acknowledge
+    (b'\x16', b''),  # Synchronous idle
+    (b'\x17', b''),  # End of transmission block
+    (b'\x18', b''),  # Cancel
+    (b'\x19', b''),  # End of medium
+    (b'\x1a', b''),  # Substitute character
+    (b'\x1b', b''),  # Escape
+    (b'\x1c', b''),  # File separator
+    (b'\x1d', b''),  # Group separator
+    (b'\x1e', b''),  # Record separator
+    (b'\x1f', b''),  # Unit separator
 )
+
 
 def sanitize(data):
     fixed_string = force_bytes(data)
