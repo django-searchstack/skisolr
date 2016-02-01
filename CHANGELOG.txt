@@ -1,5 +1,6 @@
 === 1.0.0pre1 (Unreleased) ===
 
+- Use nose and coverage for tests
 - Remove Python 2.6 support
 - Add Solr.system_info to call Solr SystemInfoHandler
 - Fix SolrCoreAdmin requests

@@ -1,18 +1,19 @@
 ======
-pysolr
+skisolr
 ======
 
-``pysolr`` is a lightweight Python wrapper for `Apache Solr`_. It provides an
-interface that queries the server and returns results based on the query.
+.. image:: https://img.shields.io/travis/django-searchstack/skisolr/master.svg?style=flat-square  
+   :target: https://travis-ci.org/django-searchstack/skisolr?branch=master
+.. image:: https://img.shields.io/coveralls/django-searchstack/skisolr/master.svg?style=flat-square
+   :target: https://coveralls.io/github/django-searchstack/skisolr?branch=master
+
+``skisolr`` is a lightweight Python wrapper for `Apache Solr`_. It provides an
+interface that queries the server and returns results based on the query. It's a fork of pysolr and 
+is mainly intended to serve as internal dependency for `Django-Searchstack`_. Therefore, not much 
+guarantees are provided regarding API stability at the moment.
 
 .. _`Apache Solr`: http://lucene.apache.org/solr/
-
-
-Status
-======
-
-.. image:: https://secure.travis-ci.org/toastdriven/pysolr.png
-   :target: https://secure.travis-ci.org/toastdriven/pysolr
+.. _`Django-Searchstack`: http://github.com/django-searchstack/django-searchstack/
 
 
 Features
@@ -23,12 +24,13 @@ Features
 * `"More Like This" <http://wiki.apache.org/solr/MoreLikeThis>`_ support (if set up in Solr).
 * `Spelling correction <http://wiki.apache.org/solr/SpellCheckComponent>`_ (if set up in Solr).
 * Timeout support.
+* Core administration.
 
 
 Requirements
 ============
 
-* Python 2.6 - 3.3
+* Python 2.7 - 3.3
 * Requests 2.0+
 * **Optional** - ``simplejson``
 
@@ -100,31 +102,22 @@ Basic usage looks like:
 LICENSE
 =======
 
-``pysolr`` is licensed under the New BSD license.
+``skisolr`` is licensed under the New BSD license.
 
 
 Running Tests
 =============
-
-The ``run-tests.py`` script will automatically perform the steps below and is recommended for testing by
-default unless you need more control.
 
 Running a test Solr instance
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Downloading, configuring and running Solr 4 looks like this::
 
-    ./start-solr-test-server.sh
+    tests/start-solr-test-server.sh
 
 Running the tests
 ~~~~~~~~~~~~~~~~~
 
-The test suite requires the unittest2 library:
+The test suite requires the nose library::
 
-Python 2::
-
-    python -m unittest2 tests
-
-Python 3::
-
-    python3 -m unittest tests
+    python setup.py nosetests
