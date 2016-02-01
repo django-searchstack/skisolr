@@ -12,7 +12,7 @@ if __name__ == '__main__':
     max_retries = 100
     retry_count = 0
     retry_delay = 15
-    status_url = 'http://localhost:9001/solr/admin/ping'
+    status_url = 'http://localhost:8983/solr/core0/admin/ping'
 
     while retry_count < max_retries:
         status_code = 0
