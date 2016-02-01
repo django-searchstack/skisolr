@@ -1,14 +1,10 @@
 # -*- coding: utf-8 -*-
-from __future__ import absolute_import, print_function, unicode_literals
-
 import ast
 import datetime
 import logging
 import os
 import re
 import time
-# We can remove ExpatError when we drop support for Python 2.6:
-from xml.parsers.expat import ExpatError
 
 import requests
 
@@ -16,9 +12,6 @@ try:
     from xml.etree import ElementTree as ET
 except ImportError:
     raise ImportError("No suitable ElementTree implementation was found.")
-
-# Remove this when we drop Python 2.6:
-ParseError = getattr(ET, 'ParseError', SyntaxError)
 
 try:
     # Prefer simplejson, if installed.
@@ -465,7 +458,7 @@ class Solr(object):
                 # Since we had a precise match, we'll return the results now:
                 if reason and full_html:
                     return reason, full_html
-            except (ParseError, ExpatError):
+            except ET.ParseError:
                 # XML parsing error, so we'll let the more liberal code handle it.
                 pass
 
@@ -493,7 +486,7 @@ class Solr(object):
 
                 if reason is None:
                     full_html = ET.tostring(dom_tree)
-            except (SyntaxError, ExpatError) as err:
+            except ET.ParseError:
                 full_html = "%s" % response
 
         full_html = force_unicode(full_html)
@@ -565,7 +558,7 @@ class Solr(object):
             if isinstance(value, basestring):
                 is_string = True
 
-        if is_string == True:
+        if is_string:
             possible_datetime = DATETIME_REGEX.search(value)
 
             if possible_datetime:

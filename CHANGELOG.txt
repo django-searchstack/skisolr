@@ -1,0 +1,5 @@
+=== 1.0.0pre1 (Unreleased) ===
+
+- Remove Python 2.6 support
+
+Forked from pysolr (last commit 2015-12-01)
