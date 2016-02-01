@@ -1,5 +1,8 @@
 === 1.0.0pre1 (Unreleased) ===
 
 - Remove Python 2.6 support
+- Add Solr.system_info to call Solr SystemInfoHandler
+- Fix SolrCoreAdmin requests
+- Add nested document support in Solr.add
 
 Forked from pysolr (last commit 2015-12-01)
