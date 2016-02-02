@@ -3,7 +3,7 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 
 import unittest
 
-from pysolr import SolrCoreAdmin
+from skisolr import SolrCoreAdmin
 
 
 class SolrCoreAdminTestCase(unittest.TestCase):

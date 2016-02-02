@@ -13,7 +13,7 @@ setup(
     author_email='tadas@dailyda.com',
     long_description=open('README.rst', 'r').read(),
     py_modules=[
-        'pysolr'
+        'skisolr'
     ],
     classifiers=[
         'Development Status :: 4 - Beta',

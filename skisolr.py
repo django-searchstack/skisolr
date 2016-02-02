@@ -73,7 +73,7 @@ class NullHandler(logging.Handler):
 
 # Add the ``NullHandler`` to avoid logging by default while still allowing
 # others to attach their own handlers.
-LOG = logging.getLogger('pysolr')
+LOG = logging.getLogger('skisolr')
 h = NullHandler()
 LOG.addHandler(h)
 
@@ -249,15 +249,15 @@ class Results(object):
 
     Other response metadata (debug, highlighting, qtime, etc.) are available
     as attributes. Note that not all response keys may be covered for current
-    version of pysolr. If you're sure that your queries return
+    version of skisolr. If you're sure that your queries return
     something that is missing you can easily extend ``Results``
-    and provide it as a custom results class to ``pysolr.Solr``.
+    and provide it as a custom results class to ``skisolr.Solr``.
 
     Example::
 
-        import pysolr
+        import skisolr
 
-        class CustomResults(pysolr.Results):
+        class CustomResults(skisolr.Results):
             def __init__(self, decoded):
                  self.some_new_attribute = decoded.get('not_covered_key' None)
                  super(self, CustomResults).__init__(decoded)
@@ -301,17 +301,17 @@ class Solr(object):
 
     Optionally accepts ``results_cls`` that specifies class of results object
     returned by ``.search()`` and ``.more_like_this()`` methods.
-    Default is ``pysolr.Results``.
+    Default is ``skisolr.Results``.
 
     Usage::
 
-        solr = pysolr.Solr('http://localhost:8983/solr')
+        solr = skisolr.Solr('http://localhost:8983/solr')
         # With a 10 second timeout.
 
-        solr = pysolr.Solr('http://localhost:8983/solr', timeout=10)
+        solr = skisolr.Solr('http://localhost:8983/solr', timeout=10)
 
-        # with a dict as a default results class instead of pysolr.Results
-        solr = pysolr.Solr('http://localhost:8983/solr', results_cls=dict)
+        # with a dict as a default results class instead of skisolr.Results
+        solr = skisolr.Solr('http://localhost:8983/solr', results_cls=dict)
 
     """
     def __init__(self, url, decoder=None, timeout=60, results_cls=Results):
@@ -681,7 +681,7 @@ class Solr(object):
         through the Solr URL.
 
         Returns ``self.results_cls`` class object (defaults to
-        ``pysolr.Results``)
+        ``skisolr.Results``)
 
         Usage::
 
@@ -712,7 +712,7 @@ class Solr(object):
         Finds and returns results similar to the provided query.
 
         Returns ``self.results_cls`` class object (defaults to
-        ``pysolr.Results``)
+        ``skisolr.Results``)
 
         Requires Solr 1.3+.
 

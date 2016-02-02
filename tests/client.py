@@ -4,8 +4,8 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 import datetime
 import unittest
 
-from pysolr import (ET, IS_PY3, NESTED_DOC_KEY, Results, Solr, SolrError, clean_xml_string, force_bytes,
-                    force_unicode, json, safe_urlencode, sanitize, unescape_html)
+from skisolr import (ET, IS_PY3, NESTED_DOC_KEY, Results, Solr, SolrError, clean_xml_string, force_bytes,
+                     force_unicode, json, safe_urlencode, sanitize, unescape_html)
 
 try:
     from urllib.parse import unquote_plus

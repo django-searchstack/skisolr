@@ -38,7 +38,7 @@ Requirements
 Installation
 ============
 
-``sudo python setup.py install`` or drop the ``pysolr.py`` file anywhere on your
+``sudo python setup.py install`` or drop the ``skisolr.py`` file anywhere on your
 PYTHONPATH.
 
 
@@ -49,12 +49,11 @@ Basic usage looks like:
 
 .. code-block:: python
 
-    # If on Python 2.X
-    from __future__ import print_function
-    import pysolr
+    from __future__ import print_function  # If on Python 2.X
+    from skisolr import Solr
 
     # Setup a Solr instance. The timeout is optional.
-    solr = pysolr.Solr('http://localhost:8983/solr/', timeout=10)
+    solr = Solr('http://localhost:8983/solr/', timeout=10)
 
     # How you'd index data.
     solr.add([
