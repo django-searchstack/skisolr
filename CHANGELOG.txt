@@ -1,5 +1,6 @@
 === 1.0.0pre1 (Unreleased) ===
 
+- Don't use very short timeouts in tests since Travis CI is slow sometimes
 - Remove references to simplejson since py2.6 is not supported any more
 - Change module namespace to 'skisolr'
 - Use nose and coverage for tests
