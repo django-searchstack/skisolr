@@ -3,6 +3,7 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 
 import ast
 import datetime
+import json
 import logging
 import os
 import re
@@ -15,11 +16,6 @@ try:
 except ImportError:
     raise ImportError("No suitable ElementTree implementation was found.")
 
-try:
-    # Prefer simplejson, if installed.
-    import simplejson as json
-except ImportError:
-    import json
 
 try:
     # Python 3.X
