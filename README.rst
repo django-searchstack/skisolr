@@ -2,9 +2,9 @@
 skisolr
 ======
 
-.. image:: https://img.shields.io/travis/django-searchstack/skisolr/master.svg?style=flat-square  
+.. image:: https://travis-ci.org/django-searchstack/skisolr.svg?branch=master
    :target: https://travis-ci.org/django-searchstack/skisolr?branch=master
-.. image:: https://img.shields.io/coveralls/django-searchstack/skisolr/master.svg?style=flat-square
+.. image:: https://coveralls.io/repos/github/django-searchstack/skisolr/badge.svg?branch=master
    :target: https://coveralls.io/github/django-searchstack/skisolr?branch=master
 
 ``skisolr`` is a lightweight Python wrapper for `Apache Solr`_. It provides an
