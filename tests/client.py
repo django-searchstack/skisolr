@@ -582,6 +582,7 @@ class SolrTestCase(unittest.TestCase):
             self.assertEqual(True, all(updatedDoc[k] == originalDoc[k]
                                        for k in updatedDoc.keys() if k not in ['_version_', 'popularity']))
 
+        list2 = ['charlie', 'delta']
         self.solr.add([
             {
                 'id': 'multivalued_1',
@@ -591,12 +592,13 @@ class SolrTestCase(unittest.TestCase):
             {
                 'id': 'multivalued_2',
                 'title': 'Multivalued doc 2',
-                'word_ss': ['charlie', 'delta'],
+                'word_ss': (x for x in list2),  # test with non list/tuple
             },
         ])
 
-        originalDocs = self.solr.search('multivalued')
+        originalDocs = self.solr.search('multivalued', sort='id desc')
         self.assertEqual(len(originalDocs), 2)
+        self.assertEqual(originalDocs.docs[0]['word_ss'], list2)
         updateList = []
         for i, doc in enumerate(originalDocs):
             updateList.append({'id': doc['id'], 'word_ss': ['epsilon', 'gamma']})

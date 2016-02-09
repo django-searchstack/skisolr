@@ -1,5 +1,6 @@
 === 1.0.0pre1 (Unreleased) ===
 
+- Allow any kind of iterables for multivalued values in Solr.add (not just list/tuple)
 - Don't use very short timeouts in tests since Travis CI is slow sometimes
 - Remove references to simplejson since py2.6 is not supported any more
 - Change module namespace to 'skisolr'

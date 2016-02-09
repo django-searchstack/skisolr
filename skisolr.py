@@ -90,6 +90,11 @@ def is_py3():
 
 IS_PY3 = is_py3()
 
+if IS_PY3:
+    STRING_TYPES = (str,)
+else:
+    STRING_TYPES = (basestring,)
+
 
 def force_unicode(value):
     """
@@ -783,9 +788,10 @@ class Solr(object):
                 doc_elem.set('boost', force_unicode(value))
                 continue
 
-            # To avoid multiple code-paths we'd like to treat all of our values as iterables:
-            if isinstance(value, (list, tuple)):
-                values = value
+            # To avoid multiple code-paths we'd like to treat all of our values as iterables.
+            # Accept all kinds of iterables, not just list or tuple.
+            if not isinstance(value, STRING_TYPES) and hasattr(value, '__iter__'):
+                values = list(value)
             else:
                 values = (value, )
 
